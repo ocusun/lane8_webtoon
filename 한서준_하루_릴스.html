@@ -1,0 +1,143 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>한서준의 하루 — 릴스</title>
+<link href="https://fastly.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{--cyan:#39c5cf;--ink:#f2f6fb}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#000;overflow:hidden;font-family:'Pretendard Variable',Pretendard,sans-serif}
+#frame{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
+#wrap{width:1080px;height:1920px;position:relative;overflow:hidden;transform-origin:center;background:#0b1016}
+.layer{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;
+       transition:opacity .9s ease;will-change:transform,opacity}
+.layer.on{opacity:1}
+.kb{animation:kb 6s ease-out forwards}
+@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.15) translate(-2%, -2%)}}
+.ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    color:#52606d;font-size:40px;gap:14px;text-align:center}
+.ph b{color:#7b8a98;font-size:54px}
+/* scrim + caption */
+#scrim{position:absolute;left:0;right:0;bottom:0;height:62%;z-index:4;
+       background:linear-gradient(to top,rgba(7,11,16,.92) 4%,rgba(7,11,16,.55) 38%,transparent 100%)}
+#cap{position:absolute;left:96px;right:96px;bottom:300px;z-index:6}
+#cap .ln{font-size:84px;font-weight:800;line-height:1.28;letter-spacing:-.01em;color:var(--ink);
+         word-break:keep-all;text-shadow:0 4px 24px rgba(0,0,0,.5);
+         opacity:0;transform:translateY(34px);filter:blur(6px);
+         transition:opacity .7s ease,transform .7s cubic-bezier(.2,.75,.2,1),filter .7s}
+#cap .ln.in{opacity:1;transform:none;filter:none}
+#bar{position:absolute;left:0;bottom:0;height:8px;background:var(--cyan);width:0;z-index:7;opacity:.9}
+.vig{position:absolute;inset:0;z-index:5;pointer-events:none;
+     box-shadow:inset 0 0 240px 60px rgba(0,0,0,.55)}
+.accent{position:absolute;left:0;top:0;width:14px;height:100%;background:var(--cyan);z-index:8;opacity:.9}
+/* end card */
+#end{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;gap:30px;
+     background:radial-gradient(120% 80% at 50% 30%,#143140 0%,#0a0f15 60%);text-align:center;padding:0 90px}
+#end.show{display:flex}
+#end .t{font-size:104px;font-weight:900;color:#fff;line-height:1.14;opacity:0;transform:translateY(30px);
+        transition:.8s;letter-spacing:-.01em}
+#end .s{font-size:46px;color:#9fb6c4;opacity:0;transform:translateY(20px);transition:.8s .2s}
+#end .brand{display:flex;align-items:center;gap:20px;font-size:52px;font-weight:800;color:#fff;opacity:0;transform:translateY(20px);transition:.8s .35s}
+#end .brand .m{width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#2a6df4,var(--cyan));
+               display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900}
+#end.show .t,#end.show .s,#end.show .brand{opacity:1;transform:none}
+#hint{position:fixed;left:12px;bottom:9px;color:#566;font:13px Pretendard,sans-serif;z-index:60}
+</style>
+
+<div id="frame">
+ <div id="wrap">
+   <div class="layer" id="la"></div>
+   <div class="layer" id="lb"></div>
+   <div class="vig"></div>
+   <div class="accent"></div>
+   <div id="scrim"></div>
+   <div id="cap"></div>
+   <div id="bar"></div>
+   <div id="end">
+     <div class="t">8번 레인의 유령</div>
+     <div class="s">독학으로 시스템에 맞선 소년 · 매주 연재</div>
+     <div class="brand"><span class="m">M</span>@ghost.lane8 · mirjournal.com</div>
+   </div>
+ </div>
+</div>
+<input id="fp" type="file" accept="image/*" multiple style="display:none">
+<button id="load" style="position:fixed;right:12px;top:12px;z-index:60;background:#16212c;color:#bfe9ef;border:1px solid #2b3a47;border-radius:9px;padding:9px 13px;font:13px Pretendard,sans-serif;cursor:pointer">📁 anime 6장 불러오기</button>
+<div id="hint">6장을 화면에 끌어다 놓거나 우측 상단 버튼으로 불러오기 · F11 전체화면 → 화면 녹화 → 릴스 · 화면 클릭=처음부터</div>
+
+<script>
+const wrap=document.getElementById('wrap');
+function fit(){wrap.style.transform=`scale(${Math.min(innerWidth/1080,innerHeight/1920)})`;}
+addEventListener('resize',fit);fit();
+
+const scenes=[
+ {img:'scene1.jpg',cap:['새벽 다섯 시.','아무도 없는 물이 나를 기다린다.']},
+ {img:'scene2.jpg',cap:['레인 하나를 빌리는 값 —','누구보다 일찍, 누구보다 조용히.']},
+ {img:'scene3.jpg',cap:['25미터.','심장 소리가 귀에 닿는 1분.']},
+ {img:'scene4.jpg',cap:['10년 전 유령의 데이터.','정답이 아니라 해답을 배운다.']},
+ {img:'scene5.jpg',cap:['서울의 가장 작은 방.','그래도 꿈은 천장보다 높다.']},
+ {img:'scene6.jpg',cap:['가장 변두리에서,','가장 높은 곳을 본다.']},
+];
+const PH=['#1b3a4b','#173042','#1d2b3a','#3a2c1e','#241d2e','#10243a'];
+const SCENE_MS=4600;
+
+const la=document.getElementById('la'),lb=document.getElementById('lb');
+const capBox=document.getElementById('cap'),bar=document.getElementById('bar'),endCard=document.getElementById('end');
+let layers=[la,lb],cur=0,idx=0,timer=null,loaded={},override={};
+
+scenes.forEach(s=>{const im=new Image();im.onload=()=>loaded[s.img]=true;im.src=s.img;});
+
+function paint(layer,s,i){
+  layer.classList.remove('kb');
+  const src=override[i]||(loaded[s.img]?s.img:null);
+  if(src){layer.style.backgroundImage=`url("${src}")`;layer.innerHTML='';}
+  else{layer.style.backgroundImage='none';
+       layer.style.background=`radial-gradient(120% 90% at 60% 25%, ${PH[i]} 0%, #0a0f15 70%)`;
+       layer.innerHTML=`<div class="ph"><b>scene${i+1}.jpg</b>여기에 이미지를 넣으면<br>이 화면에 나타납니다</div>`;}
+  void layer.offsetWidth; layer.classList.add('kb');
+}
+function caption(lines){
+  capBox.innerHTML='';
+  const els=lines.map(t=>{const d=document.createElement('div');d.className='ln';d.textContent=t;capBox.appendChild(d);return d;});
+  void capBox.offsetWidth;
+  els.forEach((d,i)=>setTimeout(()=>d.classList.add('in'),180*i+250));
+}
+function show(i){
+  const s=scenes[i],next=layers[1-cur];
+  paint(next,s,i);
+  next.classList.add('on');layers[cur].classList.remove('on');cur=1-cur;
+  caption(s.cap);
+}
+function run(){
+  endCard.classList.remove('show');
+  idx=0;show(idx);
+  bar.style.transition='none';bar.style.width='0';
+  void bar.offsetWidth;
+  bar.style.transition=`width ${SCENE_MS*scenes.length/1000}s linear`;bar.style.width='100%';
+  clearInterval(timer);
+  timer=setInterval(()=>{
+    idx++;
+    if(idx<scenes.length){show(idx);}
+    else{clearInterval(timer);layers[cur].classList.remove('on');capBox.innerHTML='';
+         endCard.classList.add('show');
+         setTimeout(run,3600);}
+  },SCENE_MS);
+}
+document.getElementById('frame').addEventListener('click',()=>{clearInterval(timer);run();});
+
+// ----- 이미지 불러오기 (파일 선택 / 드래그&드롭) -----
+function useFiles(files){
+  const imgs=[...files].filter(f=>f.type.startsWith('image/'))
+                       .sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true}));
+  imgs.slice(0,6).forEach((f,i)=>{override[i]=URL.createObjectURL(f);});
+  document.getElementById('load').textContent=`✓ ${Math.min(imgs.length,6)}장 적용됨`;
+  clearInterval(timer);run();
+}
+const fp=document.getElementById('fp');
+document.getElementById('load').addEventListener('click',e=>{e.stopPropagation();fp.click();});
+fp.addEventListener('change',e=>useFiles(e.target.files));
+const fr=document.getElementById('frame');
+['dragover','drop'].forEach(ev=>fr.addEventListener(ev,e=>e.preventDefault()));
+fr.addEventListener('drop',e=>{if(e.dataTransfer&&e.dataTransfer.files.length)useFiles(e.dataTransfer.files);});
+
+setTimeout(run,300);
+</script>
