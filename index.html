@@ -1,143 +1,230 @@
 <!doctype html>
+<html lang="ko">
+<head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>한서준의 하루 — 릴스</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>8번 레인의 유령 — 감성 웹툰 | MirJournal</title>
+<meta name="description" content="흙수저 소년 한서준의 수영 도전기를 로파이 감성 웹툰으로. 매일 새로운 회차. 원작 소설 정주행은 mirjournal.com.">
 <link href="https://fastly.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
 <style>
-:root{--cyan:#39c5cf;--ink:#f2f6fb}
+:root{--bg:#080b10;--panel:#11161d;--line:#212b36;--ink:#eef3f9;--mut:#90a1b2;--cyan:#39c5cf;--blue:#2a6df4;--novel:#2dd4a7}
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;background:#000;overflow:hidden;font-family:'Pretendard Variable',Pretendard,sans-serif}
-#frame{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
-#wrap{width:1080px;height:1920px;position:relative;overflow:hidden;transform-origin:center;background:#0b1016}
-.layer{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;
-       transition:opacity .9s ease;will-change:transform,opacity}
-.layer.on{opacity:1}
-.kb{animation:kb 6s ease-out forwards}
-@keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.15) translate(-2%, -2%)}}
-.ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    color:#52606d;font-size:40px;gap:14px;text-align:center}
-.ph b{color:#7b8a98;font-size:54px}
-/* scrim + caption */
-#scrim{position:absolute;left:0;right:0;bottom:0;height:62%;z-index:4;
-       background:linear-gradient(to top,rgba(7,11,16,.92) 4%,rgba(7,11,16,.55) 38%,transparent 100%)}
-#cap{position:absolute;left:96px;right:96px;bottom:300px;z-index:6}
-#cap .ln{font-size:84px;font-weight:800;line-height:1.28;letter-spacing:-.01em;color:var(--ink);
-         word-break:keep-all;text-shadow:0 4px 24px rgba(0,0,0,.5);
-         opacity:0;transform:translateY(34px);filter:blur(6px);
-         transition:opacity .7s ease,transform .7s cubic-bezier(.2,.75,.2,1),filter .7s}
-#cap .ln.in{opacity:1;transform:none;filter:none}
-#bar{position:absolute;left:0;bottom:0;height:8px;background:var(--cyan);width:0;z-index:7;opacity:.9}
-.vig{position:absolute;inset:0;z-index:5;pointer-events:none;
-     box-shadow:inset 0 0 240px 60px rgba(0,0,0,.55)}
-.accent{position:absolute;left:0;top:0;width:14px;height:100%;background:var(--cyan);z-index:8;opacity:.9}
-/* end card */
-#end{position:absolute;inset:0;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;gap:30px;
-     background:radial-gradient(120% 80% at 50% 30%,#143140 0%,#0a0f15 60%);text-align:center;padding:0 90px}
-#end.show{display:flex}
-#end .t{font-size:104px;font-weight:900;color:#fff;line-height:1.14;opacity:0;transform:translateY(30px);
-        transition:.8s;letter-spacing:-.01em}
-#end .s{font-size:46px;color:#9fb6c4;opacity:0;transform:translateY(20px);transition:.8s .2s}
-#end .brand{display:flex;align-items:center;gap:20px;font-size:52px;font-weight:800;color:#fff;opacity:0;transform:translateY(20px);transition:.8s .35s}
-#end .brand .m{width:60px;height:60px;border-radius:14px;background:linear-gradient(135deg,#2a6df4,var(--cyan));
-               display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900}
-#end.show .t,#end.show .s,#end.show .brand{opacity:1;transform:none}
-#hint{position:fixed;left:12px;bottom:9px;color:#566;font:13px Pretendard,sans-serif;z-index:60}
-</style>
+html,body{height:100%;background:var(--bg);color:var(--ink);font-family:'Pretendard Variable',Pretendard,sans-serif;-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:none}
+img{display:block}
 
-<div id="frame">
- <div id="wrap">
-   <div class="layer" id="la"></div>
-   <div class="layer" id="lb"></div>
-   <div class="vig"></div>
-   <div class="accent"></div>
-   <div id="scrim"></div>
-   <div id="cap"></div>
-   <div id="bar"></div>
-   <div id="end">
-     <div class="t">8번 레인의 유령</div>
-     <div class="s">독학으로 시스템에 맞선 소년 · 매주 연재</div>
-     <div class="brand"><span class="m">M</span>@ghost.lane8 · mirjournal.com</div>
-   </div>
- </div>
+/* ===== HUB ===== */
+#hub{max-width:880px;margin:0 auto;padding:28px 18px 80px}
+.brandbar{display:flex;align-items:center;gap:12px;font-weight:800;font-size:18px;margin-bottom:20px}
+.brandbar .m{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:900}
+.hero{position:relative;border-radius:20px;overflow:hidden;margin-bottom:8px;background:#0d1117;border:1px solid var(--line)}
+.hero .cov{width:100%;aspect-ratio:16/10;object-fit:cover;opacity:.55}
+.hero .ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:26px;background:linear-gradient(to top,rgba(8,11,16,.96),rgba(8,11,16,.2) 70%,transparent)}
+.hero .tag{color:var(--novel);font-weight:700;font-size:14px;letter-spacing:.04em}
+.hero h1{font-size:clamp(28px,6vw,44px);font-weight:900;line-height:1.12;margin:6px 0 8px;letter-spacing:-.02em}
+.hero p{color:var(--mut);font-size:15px;max-width:560px}
+.row{display:flex;gap:10px;margin:18px 0 26px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 20px;font-weight:700;font-size:15px;cursor:pointer;border:1px solid var(--line);background:var(--panel)}
+.btn.primary{background:linear-gradient(135deg,var(--blue),var(--cyan));border:none;color:#fff}
+.btn.ghost{color:var(--mut)}
+.sec{font-size:14px;color:var(--mut);font-weight:700;letter-spacing:.05em;margin:6px 4px 14px;text-transform:uppercase}
+.eplist{display:flex;flex-direction:column;gap:12px}
+.ep{display:flex;gap:14px;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px;cursor:pointer;transition:.15s}
+.ep:hover{border-color:#2f4a55;transform:translateY(-1px)}
+.ep .th{width:84px;height:110px;border-radius:11px;object-fit:cover;flex:0 0 auto;background:#0d1117}
+.ep .meta{flex:1;min-width:0}
+.ep .n{font-size:13px;color:var(--cyan);font-weight:700}
+.ep .t{font-size:19px;font-weight:800;margin:3px 0;letter-spacing:-.01em}
+.ep .s{font-size:14px;color:var(--mut);line-height:1.45;word-break:keep-all}
+.ep .d{font-size:12px;color:#62717f;margin-top:6px}
+.ep .play{flex:0 0 auto;color:var(--cyan);font-size:26px;padding:0 8px}
+.foot{margin-top:34px;color:#5a6b78;font-size:13px;text-align:center;line-height:1.7}
+
+/* ===== VIEWER ===== */
+#viewer{position:fixed;inset:0;background:#000;display:none;z-index:50}
+#viewer.on{display:block}
+#stagewrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{width:1080px;height:1920px;position:relative;overflow:hidden;transform-origin:center;background:#0b1016}
+.layer{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity .9s ease;will-change:transform,opacity}
+.layer.on{opacity:1}
+.kb{animation:kb 5.6s ease-out forwards}
+@keyframes kb{from{transform:scale(1.03)}to{transform:scale(1.16) translate(-2%,-2%)}}
+.ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#56636f;font-size:40px;text-align:center}
+.scrim{position:absolute;left:0;right:0;bottom:0;height:64%;z-index:4;background:linear-gradient(to top,rgba(7,11,16,.94) 5%,rgba(7,11,16,.5) 40%,transparent)}
+.vig{position:absolute;inset:0;z-index:5;pointer-events:none;box-shadow:inset 0 0 240px 60px rgba(0,0,0,.5)}
+.accent{position:absolute;left:0;top:0;width:14px;height:100%;background:var(--novel);z-index:8;opacity:.9}
+#cap{position:absolute;left:96px;right:96px;bottom:300px;z-index:6}
+#cap .ln{font-size:84px;font-weight:800;line-height:1.28;color:var(--ink);word-break:keep-all;text-shadow:0 4px 24px rgba(0,0,0,.5);opacity:0;transform:translateY(34px);filter:blur(6px);transition:opacity .7s,transform .7s cubic-bezier(.2,.75,.2,1),filter .7s}
+#cap .ln.in{opacity:1;transform:none;filter:none}
+#bar{position:absolute;left:0;bottom:0;height:8px;background:var(--novel);width:0;z-index:7}
+#etitle{position:absolute;left:96px;top:120px;z-index:7;font-size:40px;font-weight:700;color:var(--novel);letter-spacing:.03em;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+/* viewer controls (screen-space, not scaled) */
+#vtop{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;
+      background:linear-gradient(to bottom,rgba(0,0,0,.5),transparent)}
+#vtop button{background:rgba(20,28,36,.7);color:#fff;border:1px solid #2b3a47;border-radius:999px;padding:9px 16px;font:600 14px Pretendard,sans-serif;cursor:pointer;backdrop-filter:blur(6px)}
+#vend{position:fixed;inset:0;z-index:65;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center;padding:0 30px;
+      background:radial-gradient(120% 80% at 50% 35%,rgba(20,49,64,.96),rgba(8,11,16,.97))}
+#vend.on{display:flex}
+#vend h2{font-size:clamp(26px,7vw,40px);font-weight:900;line-height:1.15}
+#vend p{color:#9fb6c4;font-size:15px}
+#vend .row2{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.tapz{position:fixed;inset:0;z-index:55}
+@media (max-width:560px){.ep .th{width:66px;height:88px}.ep .t{font-size:17px}}
+</style>
+</head>
+<body>
+
+<!-- ================= HUB ================= -->
+<div id="hub">
+  <div class="brandbar"><span class="m">M</span>MirJournal · 감성 웹툰</div>
+
+  <div class="hero">
+    <img class="cov" id="herocov" alt="">
+    <div class="ov">
+      <div class="tag">연재 웹툰 · 매일 업데이트</div>
+      <h1>8번 레인의 유령</h1>
+      <p>거대 시스템이 국가대표를 ‘생산’하는 시대. 흙수저 소년 한서준이 가장 낡은 수영장에서 시작하는 조용한 반란 — 로파이 감성 컷으로 매일 한두 편씩.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <button class="btn primary" onclick="play(0,0)">▶ 1화부터 보기</button>
+    <a class="btn ghost" href="https://mirjournal.com/" target="_blank" rel="noopener">원작 소설 정주행 →</a>
+  </div>
+
+  <div class="sec">회차 목록</div>
+  <div class="eplist" id="eplist"></div>
+
+  <div class="foot">© MirJournal · 8번 레인의 유령 — 감성 웹툰<br>원작 소설 전편은 mirjournal.com 연재소설에서.</div>
 </div>
-<input id="fp" type="file" accept="image/*" multiple style="display:none">
-<button id="load" style="position:fixed;right:12px;top:12px;z-index:60;background:#16212c;color:#bfe9ef;border:1px solid #2b3a47;border-radius:9px;padding:9px 13px;font:13px Pretendard,sans-serif;cursor:pointer">📁 anime 6장 불러오기</button>
-<div id="hint">6장을 화면에 끌어다 놓거나 우측 상단 버튼으로 불러오기 · F11 전체화면 → 화면 녹화 → 릴스 · 화면 클릭=처음부터</div>
+
+<!-- ================= VIEWER ================= -->
+<div id="viewer">
+  <div id="stagewrap">
+    <div id="stage">
+      <div class="layer" id="la"></div>
+      <div class="layer" id="lb"></div>
+      <div class="vig"></div><div class="accent"></div>
+      <div class="scrim"></div>
+      <div id="etitle"></div>
+      <div id="cap"></div>
+      <div id="bar"></div>
+    </div>
+  </div>
+  <div class="tapz" id="tapz"></div>
+  <div id="vtop">
+    <button onclick="closeViewer()">✕ 목록</button>
+    <button id="ppbtn" onclick="togglePause()">⏸ 일시정지</button>
+  </div>
+  <div id="vend">
+    <h2 id="vendt"></h2>
+    <p id="vends"></p>
+    <div class="row2">
+      <button class="btn primary" id="nextbtn" onclick="nextEp()">다음 화 ▶</button>
+      <button class="btn" onclick="replay()">↺ 다시 보기</button>
+      <button class="btn" onclick="closeViewer()">목록으로</button>
+      <a class="btn ghost" href="https://mirjournal.com/" target="_blank" rel="noopener">소설 정주행 →</a>
+    </div>
+  </div>
+</div>
 
 <script>
-const wrap=document.getElementById('wrap');
-function fit(){wrap.style.transform=`scale(${Math.min(innerWidth/1080,innerHeight/1920)})`;}
-addEventListener('resize',fit);fit();
-
-const scenes=[
- {img:'scene1.jpg',cap:['새벽 다섯 시.','아무도 없는 물이 나를 기다린다.']},
- {img:'scene2.jpg',cap:['레인 하나를 빌리는 값 —','누구보다 일찍, 누구보다 조용히.']},
- {img:'scene3.jpg',cap:['25미터.','심장 소리가 귀에 닿는 1분.']},
- {img:'scene4.jpg',cap:['10년 전 유령의 데이터.','정답이 아니라 해답을 배운다.']},
- {img:'scene5.jpg',cap:['서울의 가장 작은 방.','그래도 꿈은 천장보다 높다.']},
- {img:'scene6.jpg',cap:['가장 변두리에서,','가장 높은 곳을 본다.']},
+/* =========================================================
+   회차 추가 방법: 아래 EPISODES 배열에 객체 하나만 추가하세요.
+   - dir : 이미지 폴더 경로 (루트면 "")
+   - scenes[].img : dir 기준 파일명
+   - scenes[].cap : 자막 (배열 = 줄바꿈)
+   이미지를 같은 저장소에 올리면 끝. 코드 수정 불필요.
+   ========================================================= */
+const EPISODES = [
+  {
+    id:"ep1", no:"1화 · 프롤로그", title:"한서준의 하루",
+    sub:"새벽 수영장에서 서울 밤까지 — 흙수저 소년의 하루.",
+    date:"2026.06.25", dir:"",
+    scenes:[
+      {img:"scene1.jpg", cap:["새벽 다섯 시.","아무도 없는 물이 나를 기다린다."]},
+      {img:"scene2.jpg", cap:["레인 하나를 빌리는 값 —","누구보다 일찍, 누구보다 조용히."]},
+      {img:"scene3.jpg", cap:["25미터.","심장 소리가 귀에 닿는 1분."]},
+      {img:"scene4.jpg", cap:["10년 전 유령의 데이터.","정답이 아니라 해답을 배운다."]},
+      {img:"scene5.jpg", cap:["서울의 가장 작은 방.","그래도 꿈은 천장보다 높다."]},
+      {img:"scene6.jpg", cap:["가장 변두리에서,","가장 높은 곳을 본다."]}
+    ]
+  }
+  // ,{ id:"ep2", no:"2화", title:"...", sub:"...", date:"...", dir:"ep2/", scenes:[ {img:"s1.jpg",cap:["..."]}, ... ] }
 ];
-const PH=['#1b3a4b','#173042','#1d2b3a','#3a2c1e','#241d2e','#10243a'];
-const SCENE_MS=4600;
 
-const la=document.getElementById('la'),lb=document.getElementById('lb');
-const capBox=document.getElementById('cap'),bar=document.getElementById('bar'),endCard=document.getElementById('end');
-let layers=[la,lb],cur=0,idx=0,timer=null,loaded={},override={};
+const SCENE_MS=4400;
+const $=s=>document.querySelector(s);
+function src(ep,fn){return (ep.dir||"")+fn;}
 
-scenes.forEach(s=>{const im=new Image();im.onload=()=>loaded[s.img]=true;im.src=s.img;});
+/* ---- HUB render ---- */
+(function buildHub(){
+  $("#herocov").src = src(EPISODES[0],EPISODES[0].scenes[0].img);
+  const box=$("#eplist");
+  EPISODES.forEach((ep,i)=>{
+    const el=document.createElement("div");el.className="ep";el.onclick=()=>play(i,0);
+    el.innerHTML=`<img class="th" src="${src(ep,ep.scenes[0].img)}" alt="">
+      <div class="meta"><div class="n">${ep.no}</div><div class="t">${ep.title}</div>
+      <div class="s">${ep.sub}</div><div class="d">${ep.date} · ${ep.scenes.length}컷</div></div>
+      <div class="play">▶</div>`;
+    box.appendChild(el);
+  });
+})();
 
-function paint(layer,s,i){
-  layer.classList.remove('kb');
-  const src=override[i]||(loaded[s.img]?s.img:null);
-  if(src){layer.style.backgroundImage=`url("${src}")`;layer.innerHTML='';}
-  else{layer.style.backgroundImage='none';
-       layer.style.background=`radial-gradient(120% 90% at 60% 25%, ${PH[i]} 0%, #0a0f15 70%)`;
-       layer.innerHTML=`<div class="ph"><b>scene${i+1}.jpg</b>여기에 이미지를 넣으면<br>이 화면에 나타납니다</div>`;}
-  void layer.offsetWidth; layer.classList.add('kb');
+/* ---- VIEWER engine ---- */
+const stage=$("#stage"),la=$("#la"),lb=$("#lb"),capBox=$("#cap"),bar=$("#bar"),etitle=$("#etitle");
+let layers=[la,lb],cur=0,epIdx=0,idx=0,timer=null,paused=false,loaded={};
+function fit(){const w=innerWidth,h=innerHeight;stage.style.transform=`scale(${Math.min(w/1080,h/1920)})`;}
+addEventListener("resize",fit);
+
+function preload(ep){ep.scenes.forEach(s=>{const im=new Image();im.onload=()=>loaded[src(ep,s.img)]=1;im.src=src(ep,s.img);});}
+function paintLayer(layer,ep,i){
+  const s=ep.scenes[i],u=src(ep,s.img);
+  layer.classList.remove("kb");
+  if(loaded[u]){layer.style.backgroundImage=`url("${u}")`;layer.innerHTML="";}
+  else{layer.style.background="radial-gradient(120% 90% at 60% 25%,#173a44,#0a0f15 72%)";layer.innerHTML='<div class="ph">불러오는 중…</div>';}
+  void layer.offsetWidth;layer.classList.add("kb");
 }
 function caption(lines){
-  capBox.innerHTML='';
-  const els=lines.map(t=>{const d=document.createElement('div');d.className='ln';d.textContent=t;capBox.appendChild(d);return d;});
-  void capBox.offsetWidth;
-  els.forEach((d,i)=>setTimeout(()=>d.classList.add('in'),180*i+250));
+  capBox.innerHTML="";
+  const els=lines.map(t=>{const d=document.createElement("div");d.className="ln";d.textContent=t;capBox.appendChild(d);return d;});
+  void capBox.offsetWidth;els.forEach((d,i)=>setTimeout(()=>d.classList.add("in"),170*i+220));
 }
-function show(i){
-  const s=scenes[i],next=layers[1-cur];
-  paint(next,s,i);
-  next.classList.add('on');layers[cur].classList.remove('on');cur=1-cur;
-  caption(s.cap);
+function showScene(i){
+  const ep=EPISODES[epIdx],next=layers[1-cur];
+  paintLayer(next,ep,i);next.classList.add("on");layers[cur].classList.remove("on");cur=1-cur;
+  caption(ep.scenes[i].cap);
 }
-function run(){
-  endCard.classList.remove('show');
-  idx=0;show(idx);
-  bar.style.transition='none';bar.style.width='0';
-  void bar.offsetWidth;
-  bar.style.transition=`width ${SCENE_MS*scenes.length/1000}s linear`;bar.style.width='100%';
-  clearInterval(timer);
-  timer=setInterval(()=>{
-    idx++;
-    if(idx<scenes.length){show(idx);}
-    else{clearInterval(timer);layers[cur].classList.remove('on');capBox.innerHTML='';
-         endCard.classList.add('show');
-         setTimeout(run,3600);}
-  },SCENE_MS);
+function schedule(){clearTimeout(timer);if(paused)return;timer=setTimeout(()=>{idx++;advance();},SCENE_MS);}
+function advance(){
+  const ep=EPISODES[epIdx];
+  if(idx<ep.scenes.length){showScene(idx);schedule();}
+  else{endEp();}
 }
-document.getElementById('frame').addEventListener('click',()=>{clearInterval(timer);run();});
-
-// ----- 이미지 불러오기 (파일 선택 / 드래그&드롭) -----
-function useFiles(files){
-  const imgs=[...files].filter(f=>f.type.startsWith('image/'))
-                       .sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true}));
-  imgs.slice(0,6).forEach((f,i)=>{override[i]=URL.createObjectURL(f);});
-  document.getElementById('load').textContent=`✓ ${Math.min(imgs.length,6)}장 적용됨`;
-  clearInterval(timer);run();
+function play(ei,si){
+  epIdx=ei;idx=si||0;paused=false;$("#ppbtn").textContent="⏸ 일시정지";
+  $("#vend").classList.remove("on");$("#viewer").classList.add("on");
+  const ep=EPISODES[epIdx];etitle.textContent=ep.no;preload(ep);fit();
+  bar.style.transition="none";bar.style.width="0";void bar.offsetWidth;
+  bar.style.transition=`width ${SCENE_MS*ep.scenes.length/1000}s linear`;bar.style.width="100%";
+  showScene(idx);schedule();
 }
-const fp=document.getElementById('fp');
-document.getElementById('load').addEventListener('click',e=>{e.stopPropagation();fp.click();});
-fp.addEventListener('change',e=>useFiles(e.target.files));
-const fr=document.getElementById('frame');
-['dragover','drop'].forEach(ev=>fr.addEventListener(ev,e=>e.preventDefault()));
-fr.addEventListener('drop',e=>{if(e.dataTransfer&&e.dataTransfer.files.length)useFiles(e.dataTransfer.files);});
-
-setTimeout(run,300);
+function endEp(){
+  clearTimeout(timer);layers[cur].classList.remove("on");capBox.innerHTML="";etitle.textContent="";
+  const ep=EPISODES[epIdx],has=epIdx<EPISODES.length-1;
+  $("#vendt").textContent=ep.title;
+  $("#vends").textContent=has?"다음 화가 준비됐어요.":"최신 화까지 다 보셨어요. 원작 소설로 이어서!";
+  $("#nextbtn").style.display=has?"":"none";
+  $("#vend").classList.add("on");
+}
+function nextEp(){if(epIdx<EPISODES.length-1)play(epIdx+1,0);}
+function replay(){play(epIdx,0);}
+function togglePause(){paused=!paused;$("#ppbtn").textContent=paused?"▶ 재생":"⏸ 일시정지";if(paused){clearTimeout(timer);}else{schedule();}}
+function closeViewer(){clearTimeout(timer);$("#viewer").classList.remove("on");$("#vend").classList.remove("on");}
+$("#tapz").addEventListener("click",e=>{ // tap right half = next, left = prev
+  const x=e.clientX/innerWidth;clearTimeout(timer);
+  if(x>0.5){idx++;advance();}else{idx=Math.max(0,idx-1);showScene(idx);schedule();}
+});
 </script>
+</body>
+</html>
