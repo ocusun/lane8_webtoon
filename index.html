@@ -198,8 +198,9 @@ function src(ep,fn){return (ep.dir||"")+fn;}
 /* ---- VIEWER engine ---- */
 const stage=$("#stage"),la=$("#la"),lb=$("#lb"),capBox=$("#cap"),bar=$("#bar"),etitle=$("#etitle");
 let layers=[la,lb],cur=0,epIdx=0,idx=0,timer=null,paused=false,loaded={};
-function fit(){const w=innerWidth,h=(window.visualViewport?window.visualViewport.height:innerHeight);stage.style.transform=`scale(${Math.min(w/1080,h/1920)})`;}
+function fit(){const c=document.getElementById('stagewrap');const w=c.clientWidth||innerWidth,h=c.clientHeight||innerHeight;if(w&&h)stage.style.transform=`scale(${Math.min(w/1080,h/1920)})`;}
 addEventListener("resize",fit);
+addEventListener("orientationchange",()=>setTimeout(fit,120));
 if(window.visualViewport)window.visualViewport.addEventListener("resize",fit);
 
 function preload(ep){ep.scenes.forEach(s=>{const im=new Image();im.onload=()=>loaded[src(ep,s.img)]=1;im.src=src(ep,s.img);});}
@@ -229,7 +230,8 @@ function advance(){
 function play(ei,si){
   epIdx=ei;idx=si||0;paused=false;$("#ppbtn").textContent="⏸ 일시정지";
   $("#vend").classList.remove("on");$("#viewer").classList.add("on");
-  const ep=EPISODES[epIdx];etitle.textContent=ep.no;preload(ep);fit();
+  const ep=EPISODES[epIdx];etitle.textContent=ep.no;preload(ep);
+  requestAnimationFrame(fit);setTimeout(fit,150);setTimeout(fit,500);
   bar.style.transition="none";bar.style.width="0";void bar.offsetWidth;
   bar.style.transition=`width ${SCENE_MS*ep.scenes.length/1000}s linear`;bar.style.width="100%";
   showScene(idx);schedule();
