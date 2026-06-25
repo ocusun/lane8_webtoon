@@ -69,7 +69,19 @@ img{display:block}
 #vend p{color:#9fb6c4;font-size:15px}
 #vend .row2{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px}
 .tapz{position:fixed;inset:0;z-index:55}
-@media (max-width:560px){.ep .th{width:66px;height:88px}.ep .t{font-size:17px}}
+@media (max-width:560px){
+  #hub{padding:16px 14px 56px}
+  .brandbar{font-size:16px;margin-bottom:14px}
+  .hero .cov{aspect-ratio:auto;height:34vh;min-height:190px}
+  .hero .ov{padding:18px}
+  .hero h1{font-size:30px}
+  .hero p{font-size:13px}
+  .row{margin:14px 0 20px}
+  .btn{padding:10px 16px;font-size:14px}
+  .ep .th{width:64px;height:84px}
+  .ep .t{font-size:17px}
+  .ep .s{font-size:13px}
+}
 </style>
 </head>
 <body>
@@ -89,7 +101,7 @@ img{display:block}
 
   <div class="row">
     <button class="btn primary" onclick="play(0,0)">▶ 1화부터 보기</button>
-    <a class="btn ghost" href="https://mirjournal.com/" target="_blank" rel="noopener">원작 소설 정주행 →</a>
+    <a class="btn ghost" href="https://mirjournal.com/serial-novel-2/" target="_blank" rel="noopener">원작 소설 정주행 →</a>
   </div>
 
   <div class="sec">회차 목록</div>
@@ -123,7 +135,7 @@ img{display:block}
       <button class="btn primary" id="nextbtn" onclick="nextEp()">다음 화 ▶</button>
       <button class="btn" onclick="replay()">↺ 다시 보기</button>
       <button class="btn" onclick="closeViewer()">목록으로</button>
-      <a class="btn ghost" href="https://mirjournal.com/" target="_blank" rel="noopener">소설 정주행 →</a>
+      <a class="btn ghost" href="https://mirjournal.com/serial-novel-2/" target="_blank" rel="noopener">소설 정주행 →</a>
     </div>
   </div>
 </div>
@@ -186,8 +198,9 @@ function src(ep,fn){return (ep.dir||"")+fn;}
 /* ---- VIEWER engine ---- */
 const stage=$("#stage"),la=$("#la"),lb=$("#lb"),capBox=$("#cap"),bar=$("#bar"),etitle=$("#etitle");
 let layers=[la,lb],cur=0,epIdx=0,idx=0,timer=null,paused=false,loaded={};
-function fit(){const w=innerWidth,h=innerHeight;stage.style.transform=`scale(${Math.min(w/1080,h/1920)})`;}
+function fit(){const w=innerWidth,h=(window.visualViewport?window.visualViewport.height:innerHeight);stage.style.transform=`scale(${Math.min(w/1080,h/1920)})`;}
 addEventListener("resize",fit);
+if(window.visualViewport)window.visualViewport.addEventListener("resize",fit);
 
 function preload(ep){ep.scenes.forEach(s=>{const im=new Image();im.onload=()=>loaded[src(ep,s.img)]=1;im.src=src(ep,s.img);});}
 function paintLayer(layer,ep,i){
